@@ -1,0 +1,128 @@
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fantasy Football AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                dark: 'rgb(var(--color-brand-dark) / <alpha-value>)',
+                accent: 'rgb(var(--color-brand-accent) / <alpha-value>)',
+                highlight: 'rgb(var(--color-brand-highlight) / <alpha-value>)',
+                card: 'rgb(var(--color-brand-card) / <alpha-value>)',
+                contrast: 'rgb(var(--color-brand-contrast-text) / <alpha-value>)',
+                text: 'rgb(var(--color-brand-text) / <alpha-value>)'
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Global Google Font Library for Skins */
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+      :root {
+        --color-brand-dark: 10 15 25;
+        /* Cyber Neon Default: Primary Cyan (0, 243, 255), Secondary Magenta (255, 0, 255) */
+        --color-brand-accent: 0 243 255;
+        --color-brand-highlight: 255 0 255;
+        --color-brand-card: 20 25 40;
+        --color-brand-contrast-text: 0 0 0;
+        --color-brand-text: 255 255 255;
+        --font-primary: 'Chakra Petch', sans-serif;
+      }
+
+      .theme-light {
+        --color-brand-dark: 241 245 249; /* Slate 100 */
+        --color-brand-accent: 101 67 33; /* Pigskin Brown */
+        --color-brand-highlight: 22 163 74; /* Turf Green */
+        --color-brand-card: 255 255 255; /* White */
+        --color-brand-contrast-text: 255 255 255;
+        --color-brand-text: 15 23 42; /* Slate 900 */
+      }
+
+      body {
+        font-family: var(--font-primary);
+        background-color: rgb(var(--color-brand-dark));
+        color: rgb(var(--color-brand-text));
+        transition: background-color 0.4s ease, color 0.4s ease;
+      }
+
+      /* Apply global dynamic font to headers */
+      h1, h2, h3, .font-skin {
+        font-family: var(--font-primary);
+      }
+
+      /* Light Theme Global Overrides to avoid broken text visibility */
+      .theme-light .text-white { color: rgb(15 23 42) !important; }
+      .theme-light .text-gray-400, .theme-light .text-gray-500 { color: rgb(71 85 105) !important; }
+      .theme-light .bg-brand-card { background-color: white !important; }
+      .theme-light .bg-gray-800 { background-color: rgb(226 232 240) !important; }
+      .theme-light .bg-gray-900 { background-color: rgb(203 213 225) !important; }
+      .theme-light .border-gray-700, .theme-light .border-gray-800 { border-color: rgb(203 213 225) !important; }
+      .theme-light .bg-black\/50, .theme-light .bg-black\/80, .theme-light .bg-black\/60 { background-color: rgba(255, 255, 255, 0.8) !important; backdrop-filter: blur(10px); }
+      .theme-light .shadow-brand-highlight\/20 { shadow: 0 10px 15px -3px rgba(22, 163, 74, 0.1), 0 4px 6px -4px rgba(22, 163, 74, 0.1); }
+      .theme-light .shadow-brand-accent\/20 { shadow: 0 10px 15px -3px rgba(101, 67, 33, 0.1), 0 4px 6px -4px rgba(101, 67, 33, 0.1); }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgb(var(--color-brand-dark));
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+
+      @keyframes slideInRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+      @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes reveal { from { width: 0; } to { width: 6rem; } }
+      @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+      @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+      
+      .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }
+      .animate-slide-up { animation: slideInUp 0.5s ease-out forwards; }
+      .animate-slide-right { animation: slideInRight 0.5s ease-out forwards; }
+      .animate-reveal { animation: reveal 0.8s ease-out forwards; }
+      .animate-float { animation: float 3s ease-in-out infinite; }
+      
+      .custom-scrollbar::-webkit-scrollbar { display: none; }
+      .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

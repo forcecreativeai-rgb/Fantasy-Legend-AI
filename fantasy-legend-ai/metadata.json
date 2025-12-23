@@ -1,0 +1,8 @@
+{
+  "name": "Fantasy Legend AI",
+  "description": "The ultimate AI companion for Fantasy Football. Generate team logos, animate them, track player news with real-time search, and get expert analysis.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
