@@ -1,0 +1,15 @@
+# Environment variables
+.env
+.env.*
+
+# Node / build artifacts
+node_modules
+dist
+build
+
+# Logs
+logs
+*.log
+
+# macOS
+.DS_Store
